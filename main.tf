@@ -6,7 +6,7 @@ resource "azurerm_resource_group" "resource_group" {
 resource "azurerm_kubernetes_cluster" "aks_cluster" {
   name                = var.cluster_name
   location            = var.location
-  resource_group_name = azurerm_resource_group.resource_group.name
+  resource_group_name = var.resource_group_name
   dns_prefix          = var.dns_prefix
 
   default_node_pool {
@@ -16,8 +16,8 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   }
 
   service_principal {
-    client_id     = var.service_principal.client_id
-    client_secret = var.service_principal.client_secret
+    client_id     = var.client_id
+    client_secret = var.client_secret
   }
 
   tags = {
@@ -26,9 +26,9 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
 }
 
 resource "azurerm_monitor_diagnostic_setting" "aks_cluster" {
-  name                       = "${azurerm_kubernetes_cluster.cluster.name}-audit"
-  target_resource_id         = azurerm_kubernetes_cluster.cluster.id
-  log_analytics_workspace_id = var.diagnostics_workspace_id
+  name                       = "${azurerm_kubernetes_cluster.aks_cluster.name}-audit"
+  target_resource_id         = azurerm_kubernetes_cluster.aks_cluster.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.test.id
 
   log {
     category = "kube-apiserver"
@@ -83,4 +83,15 @@ resource "azurerm_monitor_diagnostic_setting" "aks_cluster" {
       enabled = false
     }
   }
+}
+
+resource "random_id" "log_analytics_workspace_name_suffix" {
+    byte_length = 8
+}
+resource "azurerm_log_analytics_workspace" "test" {
+    # The WorkSpace name has to be unique across the whole of azure, not just the current subscription/tenant.
+    name                = "workspace-${random_id.log_analytics_workspace_name_suffix.dec}"
+    location            = var.location
+    resource_group_name = var.resource_group_name
+    sku                 = var.log_analytics_workspace_sku
 }

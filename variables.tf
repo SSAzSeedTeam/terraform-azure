@@ -22,98 +22,29 @@ variable "node_size" {
   default = "Standard_D2_v2"
 }
 
-variable "service_principal" {
-  type = object({
-    client_id     = string
-    client_secret = string
-  })
-  description = "The service principal to use"
-}
+#variable "service_principal" {
+#  type = object({
+##    client_id     = "a5e41b3d-b36f-4d5a-b08b-1ab20523039c"
+##    client_secret = "ttqmSeefg06Z.vZRhQA2Gkq21tnC.ML9_l"
+#    client_id     = string
+#    client_secret = string
+#  })
+#  description = "The terraform service principal to use"
+#}
 
-variable dns_prefix {
-}
-﻿
-
-
-#old
-
-variable "dns_prefix" {
-  description = "DNS prefix"
-}
-variable "location" {
-  description = "azure location to deploy resources"
-  default = ""
-}
-variable "cluster_name" {
-  description = "AKS cluster name"
-  default = "daytrader_cluster"
-}
-variable "resource_group_name" {
-  description = "name of the resource group to deploy AKS cluster in"
-  default = "daytrader_rg"
-}
-variable "kubernetes_version" {
-  description = "version of the kubernetes cluster"
-}
-variable "api_server_authorized_ip_ranges" {
-  description = "ip ranges to lock down access to kubernetes api server"
-  default     = "0.0.0.0/0"
-}
-# Node Pool config
-variable "agent_pool_name" {
-  description = "name for the agent pool profile"
-  default     = "default"
-}
-variable "agent_pool_type" {
-  description = "type of the agent pool (AvailabilitySet and VirtualMachineScaleSets)"
-  default     = "AvailabilitySet"
-}
-variable "node_count" {
-  description = "number of nodes to deploy"
-  default = "1"
-}
-variable "vm_size" {
-  description = "size/type of VM to use for nodes"
-}
-variable "os_disk_size_gb" {
-  description = "size of the OS disk to attach to the nodes"
-}
-variable "vnet_subnet_id" {
-  description = "vnet id where the nodes will be deployed"
-}
-variable "max_pods" {
-  description = "maximum number of pods that can run on a single node"
-}
-
-#Network Profile config
-variable "network_plugin" {
-  description = "network plugin for kubenretes network overlay (azure or calico)"
-  default     = "azure"
-}
-variable "service_cidr" {
-  description = "kubernetes internal service cidr range"
-  default     = "10.0.0.0/16"
-}
-variable "diagnostics_workspace_id" {
-  description = "log analytics workspace id for cluster audit"
-}
-variable "min_count" {
-  default     = 1
-  description = "Minimum Node Count"
-}
-variable "max_count" {
-  default     = 5
-  description = "Maximum Node Count"
-}
-variable "default_pool_name" {
-  description = "name for the agent pool profile"
-  default     = "default"
-}
-variable "default_pool_type" {
-  description = "type of the agent pool (AvailabilitySet and VirtualMachineScaleSets)"
-  default     = "VirtualMachineScaleSets"
-}
 variable "client_id" {  
+    default = "a5e41b3d-b36f-4d5a-b08b-1ab20523039c"
 }
 variable "client_secret" {
+    default = "ttqmSeefg06Z.vZRhQA2Gkq21tnC.ML9_l"
+}
+#variable "diagnostics_workspace_id" {
+#  description = "log analytics workspace id for cluster audit"
+#}
+variable dns_prefix {
+    default = "xyz"
+}
+# refer https://azure.microsoft.com/pricing/details/monitor/ for log analytics pricing
+variable log_analytics_workspace_sku {
+    default = "PerGB2018"
 }
