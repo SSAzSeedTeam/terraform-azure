@@ -48,3 +48,7 @@ variable dns_prefix {
 variable log_analytics_workspace_sku {
     default = "PerGB2018"
 }
+
+variable "sql_server_name" {
+  default = "daytrader-server"
+}
