@@ -3,7 +3,7 @@ variable "cluster_name" {
 }
 
 variable "resource_group_name" {
-  default = "daytrader_rg"
+  default = "daytrader_aks_rg"
 }
 
 variable "environment" {
@@ -47,8 +47,4 @@ variable dns_prefix {
 # refer https://azure.microsoft.com/pricing/details/monitor/ for log analytics pricing
 variable log_analytics_workspace_sku {
     default = "PerGB2018"
-}
-
-variable "sql_server_name" {
-  default = "daytrader-server"
 }
